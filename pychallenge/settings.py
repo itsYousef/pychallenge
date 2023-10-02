@@ -81,7 +81,6 @@ WSGI_APPLICATION = 'pychallenge.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DB_ENDPOINT='http://localhost:8090'
-DB_TABLE = 'y-alm-devices'
 # AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
 # AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 
