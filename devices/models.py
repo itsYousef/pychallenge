@@ -1,14 +1,27 @@
-from django.db import models
-from django.utils import timezone
-import datetime
+from pynamodb.models import Model
+from pynamodb.attributes import UnicodeAttribute
+from pychallenge.settings import DB_ENDPOINT
 
-
-class Device(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)
-    device_model = models.CharField(max_length=100)
-    name = models.CharField(max_length=100)
-    note = models.CharField(max_length=100)
-    serial = models.CharField(max_length=100)
+class Device(Model):
+    """
+    A DynamoDB Device model
+    """
+    class Meta:
+        table_name = "y-alm-devices"
+        # Optional: Specify the hostname only if it needs to be changed from the default AWS setting
+        host = DB_ENDPOINT
+        # Specifies the region
+        # region = 'us-west-1'
+        # Specifies the write capacity
+        write_capacity_units = 2
+        # Specifies the read capacity
+        read_capacity_units = 5
+        
+    id = UnicodeAttribute(hash_key=True)
+    deviceModel = UnicodeAttribute()
+    name = UnicodeAttribute()
+    note = UnicodeAttribute()
+    serial = UnicodeAttribute()
 
     def __str__(self):
-        return self.device_model
+        return self.deviceModel
