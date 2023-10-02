@@ -29,30 +29,31 @@ class DeviceListApiView(APIView):
             device.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except:
-            return Response("Cannot create device.", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Cannot create device."}, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class DeviceDetailApiView(APIView):
-#     def get_object(self, device_id):
-#         '''
-#         Helper method to get the object with given device_id
-#         '''
-#         id_prefix = '/devices/'
-#         try:
-#             return Device.objects.get(id=id_prefix + device_id)
-#         except Device.DoesNotExist:
-#             return None
+class DeviceDetailApiView(APIView):
+    def get_object(self, device_id):
+        '''
+        Helper method to get the object with given device_id
+        '''
+        id_prefix = '/devices/'
+        try:
+            return Device.get(id_prefix + device_id)
+        except Device.DoesNotExist:  # type: ignore
+            return None
 
-#     def get(self, request, device_id, *args, **kwargs):
-#         '''
-#         Retrieves the Device with given device_id
-#         '''
-#         founded_device = self.get_object(device_id)
-#         if not founded_device:
-#             return Response(
-#                 {"res": "Device with given id does not exists."},
-#                 status=status.HTTP_404_NOT_FOUND
-#             )
+    def get(self, request, device_id, *args, **kwargs):
+        '''
+        Retrieves the Device with given device_id
+        '''
+        device = self.get_object(device_id)
 
-#         serializer = DeviceSerializer(founded_device)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
+        if not device:
+            return Response(
+                {"error": "Device with given id does not exists."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = DeviceSerializer(device)
+        return Response(serializer.data, status=status.HTTP_200_OK)
