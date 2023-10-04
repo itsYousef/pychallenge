@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$un4$+(^nb0_6&ftt7_nk5#h6gs+$ii^807dg-6vg&k(4d&0j_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -37,7 +37,6 @@ INTERNAL_IPS = [
 
 INSTALLED_APPS = [
     'devices',
-    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -79,10 +78,6 @@ WSGI_APPLICATION = 'pychallenge.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DB_ENDPOINT='http://localhost:8090'
-# AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
-# AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 
 # DATABASES = {
 #     'default': {
