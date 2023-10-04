@@ -28,7 +28,7 @@ provider:
   # deploymentMethod: direct
   runtime: python3.9
   region: eu-north-1
-  # stage: dev
+  stage: dev
   environment:
     DYNAMODB_TABLE: y-alm-devices
     DYNAMODB_TABLE_REGION: eu-north-1
@@ -59,11 +59,11 @@ resources:
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: todo_id
+            AttributeName: id
             AttributeType: S
         KeySchema:
           -
-            AttributeName: todo_id
+            AttributeName: id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
