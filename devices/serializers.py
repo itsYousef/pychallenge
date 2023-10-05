@@ -1,8 +1,11 @@
 from rest_framework import serializers
-from .models import Device
 import re
 
+
 class DeviceSerializer(serializers.Serializer):
+    """
+    Serializer for device data
+    """
     id = serializers.CharField(max_length=100)
     deviceModel = serializers.CharField(max_length=200)
     name = serializers.CharField(max_length=200)
@@ -10,11 +13,11 @@ class DeviceSerializer(serializers.Serializer):
     serial = serializers.CharField(max_length=200)
 
     def validate_id(self, value):
-        # check if the code matches the required pattern
+        """
+        Checks if the id field matches the required pattern
+        """
         pattern = r'(\/devices\/)[\w\d\s]+'
         if not re.match(pattern, value):
             raise serializers.ValidationError(
                 'This value does not match the required pattern. it should be started with `/devices/`')
         return value
-    
-    

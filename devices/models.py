@@ -3,9 +3,9 @@ from pynamodb.models import Model
 from pynamodb.attributes import UnicodeAttribute
 
 class Device(Model):
-    '''
-    A DynamoDB Device model
-    '''
+    """
+    A DynamoDB model for devices
+    """
     class Meta:
         table_name = os.getenv('DB_TABLE')
         # Optional: Specify the hostname only if it needs to be changed from the default AWS setting
@@ -16,7 +16,7 @@ class Device(Model):
         # Specifies the read capacity
         read_capacity_units = 5
         # Specifies the region
-        region = 'eu-north-1'
+        region = os.getenv('REGION')
         
     id = UnicodeAttribute(hash_key=True)
     deviceModel = UnicodeAttribute()
