@@ -51,9 +51,9 @@ class DeviceTests(APISimpleTestCase):
             print('Table does not exists!')
 
     def test_create_device(self):
-        '''
-        Ensure we can create a new device object.
-        '''
+        """
+        Test creating a new device object.
+        """
         url = reverse('device_list')
         data = {
             'id': '/devices/id1',
@@ -67,14 +67,30 @@ class DeviceTests(APISimpleTestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Device.count(data['id']), 1)
         self.assertEqual(Device.get(data['id']).name, 'Sensor')
-
-    def test_get_one_device(self):
-        '''
-        Ensure that we can get a single device.
-        '''
+        
+    def test_create_device_fail(self):
+        """
+        Test getting Bad Request error when any of payload fields missing.
+        """
+        url = reverse('device_list')
         data = {
             'id': '/devices/id2',
-            'deviceModel': '/devicemodels/id2',
+            # 'deviceModel': '/devicemodels/id2',
+            'name': 'Sensor',
+            'note': 'Testing a sensor.',
+            'serial': 'A020000102'
+        }
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        
+    def test_get_one_device(self):
+        """
+        Test getting a single device detail.
+        """
+        data = {
+            'id': '/devices/id3',
+            'deviceModel': '/devicemodels/id3',
             'name': 'Sensor',
             'note': 'Testing a sensor.',
             'serial': 'A020000102'
@@ -93,3 +109,13 @@ class DeviceTests(APISimpleTestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['id'], data['id'])  # type: ignore
+        
+    def test_get_one_device_fail(self):
+        """
+        Test getting Not Found error when device with requested id does not exists.
+        """
+        url = reverse('device_detail', args=['id8'])
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        
