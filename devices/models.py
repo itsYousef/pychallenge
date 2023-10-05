@@ -2,13 +2,13 @@ from pynamodb.models import Model
 from pynamodb.attributes import UnicodeAttribute
 
 class Device(Model):
-    """
+    '''
     A DynamoDB Device model
-    """
+    '''
     class Meta:
-        table_name = "y-alm-devices"
+        table_name = 'y-alm-devices'
         # Optional: Specify the hostname only if it needs to be changed from the default AWS setting
-        # host = 'http://localhost:8090'
+        host = 'http://localhost:5454'
         # Specifies the write capacity
         write_capacity_units = 2
         # Specifies the read capacity
