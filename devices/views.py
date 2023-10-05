@@ -21,15 +21,16 @@ class DeviceListApiView(APIView):
 
         serializer.is_valid(raise_exception=True)
         device = Device(serializer.data.get('id'),
-                        deviceModel=serializer.data.get('id'),
+                        deviceModel=serializer.data.get('deviceModel'),
                         name=serializer.data.get('name'),
                         note=serializer.data.get('note'),
                         serial=serializer.data.get('serial'))
+                
         try:
             device.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except:
-            return Response({"error": "Cannot create device."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Cannot create device.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class DeviceDetailApiView(APIView):
@@ -51,7 +52,7 @@ class DeviceDetailApiView(APIView):
 
         if not device:
             return Response(
-                {"error": "Device with given id does not exists."},
+                {'error': 'Device with given id does not exists.'},
                 status=status.HTTP_404_NOT_FOUND
             )
 
