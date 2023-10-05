@@ -1,10 +1,11 @@
+import os
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APISimpleTestCase
 from devices.models import Device
 import boto3
 
-DB_TABLE = 'y-alm-devices'
+DB_TABLE = os.getenv('DB_TABLE')
 
 
 class DeviceTests(APISimpleTestCase):
@@ -12,7 +13,7 @@ class DeviceTests(APISimpleTestCase):
     def setUpClass(cls):
         dynamodb = boto3.resource(
             'dynamodb',
-            endpoint_url='http://localhost:5454')
+            endpoint_url=os.getenv('DYNAMODB_LOCAL_ENDPOINT'))
 
         try:
             table = dynamodb.create_table(  # type: ignore
@@ -42,7 +43,7 @@ class DeviceTests(APISimpleTestCase):
     def tearDownClass(cls):
         dynamodb = boto3.resource(
             'dynamodb',
-            endpoint_url='http://localhost:5454')
+            endpoint_url=os.getenv('DYNAMODB_LOCAL_ENDPOINT'))
         try:
             table = dynamodb.Table(DB_TABLE)  # type: ignore
             table.delete()
@@ -90,5 +91,5 @@ class DeviceTests(APISimpleTestCase):
         response = self.client.get(url)
 
 
-        # self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['id'], data['id'])  # type: ignore

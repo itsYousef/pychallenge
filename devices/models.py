@@ -1,3 +1,4 @@
+import os
 from pynamodb.models import Model
 from pynamodb.attributes import UnicodeAttribute
 
@@ -6,9 +7,10 @@ class Device(Model):
     A DynamoDB Device model
     '''
     class Meta:
-        table_name = 'y-alm-devices'
+        table_name = os.getenv('DB_TABLE')
         # Optional: Specify the hostname only if it needs to be changed from the default AWS setting
-        host = 'http://localhost:5454'
+        if(os.getenv('STAGE') == 'dev'):
+            host = os.getenv('DYNAMODB_LOCAL_ENDPOINT')
         # Specifies the write capacity
         write_capacity_units = 2
         # Specifies the read capacity
