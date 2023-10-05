@@ -36,7 +36,7 @@ DYNAMODB_LOCAL_ENDPOINT=http://localhost:5454 # your local database connection u
 REGION=eu-north-1 # your aws region
 ```
 
-* Run migrations:
+* Run migrations(only for local database):
 ```bash
 python dynamo_migrator.py
 ```

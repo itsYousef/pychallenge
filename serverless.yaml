@@ -28,7 +28,7 @@ provider:
   # deploymentMethod: direct
   runtime: python3.9
   region: eu-north-1
-  stage: dev
+  stage: prod
   environment:
     DYNAMODB_TABLE: y-alm-devices
     DYNAMODB_TABLE_REGION: eu-north-1
